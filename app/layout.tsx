@@ -22,9 +22,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={ibmPlexSans.className}>
         {children}
-        <footer className="mt-auto bg-violet-900 py-6 text-lg text-white">
-          <div className="text-center">By Volodymyr</div>
-        </footer>
       </body>
     </html>
   );
