@@ -1,13 +1,16 @@
-import Image from "next/image";
 import Banner from "@/components/banner.client";
-import Link from "next/link";
+import Card from "@/components/card.server";
 
 export default function Home() {
   const coffeeStoreId = 'dark-horse-coffee';
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-14">
       <Banner />
-      <Link href={`/coffee-store/${coffeeStoreId}`}>Dark horse coffee</Link>
+      <Card
+        name='Dark horse coffee'
+        imgUrl='/static/hero-image.png'
+        href={`coffee-store/${coffeeStoreId}`}
+      />
     </main>
   );
 }
