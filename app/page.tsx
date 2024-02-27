@@ -1,35 +1,16 @@
 import Banner from "@/components/banner.client";
 import Card from "@/components/card.server";
 import { CoffeeStoreType } from "@/types";
+import { fetchCoffeeStores } from "@/lib/coffee-stores";
 
-export default function Home() {
-  const coffeeStoreId = 'dark-horse-coffee';
-  const coffeeStores = [
-    {
-      "name": "StrangeLove Coffee",
-      "imgUrl": "https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-    },
-    {
-      "name": "Dark horse Coffee",
-      "imgUrl": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-    },
-    {
-      "name": "StrangeLove Coffee",
-      "imgUrl": "https://images.unsplash.com/photo-1511920170033-f8396924c348?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-    },
-    {
-      "name": "Dark horse Coffee",
-      "imgUrl": "https://images.unsplash.com/photo-1447933601403-0c6688de566e?q=80&w=2561&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-    },
-    {
-      "name": "StrangeLove Coffee",
-      "imgUrl": "https://images.unsplash.com/photo-1447933601403-0c6688de566e?q=80&w=2561&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-    },
-    {
-      "name": "Dark horse Coffee",
-      "imgUrl": "https://images.unsplash.com/photo-1518057111178-44a106bad636?q=80&w=2136&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-    },
-  ];
+async function getData() {
+  //mapbox api
+  const TORONTO_LONG_LAT = '-79.3789680885594%2C43.653833032607096';
+  return await fetchCoffeeStores(TORONTO_LONG_LAT, 6);
+}
+
+export default async function Home() {
+  const coffeeStores = await getData();
 
   return (
     <div className="mb-56">
@@ -42,10 +23,10 @@ export default function Home() {
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-2 lg:grid-cols-3 lg:gap-6">
             {coffeeStores.map((coffeeStore: CoffeeStoreType, idx: number) => (
               <Card
-                key={`${coffeeStore.name}-${idx}`}
+                key={`${coffeeStore.name}-${coffeeStore.id}`}
                 name={coffeeStore.name}
                 imgUrl={coffeeStore.imgUrl}
-                href={`/coffee-store/${idx}`}
+                href={`/coffee-store/${coffeeStore.id}?id=${idx}`}
               />
             ))}
           </div>

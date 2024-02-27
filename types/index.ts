@@ -1,9 +1,9 @@
 export type CoffeeStoreType = {
-    // id: string;
+    id: string;
     name: string;
     imgUrl: string;
-    // address: string;
-    // voting: number;
+    address: string;
+    voting: number;
 };
 
 export type MapboxType = {
