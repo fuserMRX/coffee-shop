@@ -16,7 +16,7 @@ const getListOfCoffeeStorePhotos = async () => {
 const transformCoffeeData = (
     idx: number,
     result: MapboxType,
-    photos: Array<string>
+    photos: string[]
 ) => {
     return {
         id: result.id,
