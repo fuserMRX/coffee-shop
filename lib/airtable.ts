@@ -2,12 +2,12 @@ import { AirtableRecordType, CoffeeStoreType } from '@/types';
 
 var Airtable = require('airtable');
 var base = new Airtable({ apiKey: process.env.AIRTABLE_TOKEN }).base(
-    'appawIIKUhAf0fMju'
+    'apppMTjsbNiyAmpAF'
 );
 
 const table = base('coffee-stores');
 
-const getMinifiedRecords = (records: Array<AirtableRecordType>) => {
+const getMinifiedRecords = (records: AirtableRecordType[]) => {
     return records.map((record: AirtableRecordType) => {
         return {
             recordId: record.id,
@@ -35,7 +35,7 @@ export const createCoffeeStore = async (
     try {
         if (id) {
             const records = await findRecordByFilter(id);
-            if (records.length === 0) {
+            if (!records.length) {
                 const createRecords = await table.create([
                     {
                         fields: {
@@ -67,7 +67,7 @@ export const updateCoffeeStore = async (id: string) => {
     try {
         if (id) {
             const records = await findRecordByFilter(id);
-            if (records.length !== 0) {
+            if (records.length) {
                 const record = records[0];
                 const updatedVoting = record.voting + 1;
 

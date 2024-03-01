@@ -3,23 +3,22 @@ import Link from 'next/link';
 import { fetchCoffeeStore, fetchCoffeeStores } from '@/lib/coffee-stores';
 import Image from 'next/image';
 import { CoffeeStoreType } from '@/types';
-// import { createCoffeeStore } from '@/lib/airtable';
-// import Upvote from '@/components/upvote.client';
+import { createCoffeeStore } from '@/lib/airtable';
+import Upvote from '@/components/upvote.client';
 
 async function getData(id: string, queryId: string) {
     const coffeeStoreFromMapbox = await fetchCoffeeStore(id, queryId);
-    //   const _createCoffeeStore = await createCoffeeStore(coffeeStoreFromMapbox, id);
+    const _createCoffeeStore = await createCoffeeStore(coffeeStoreFromMapbox, id);
+    const voting = _createCoffeeStore ? _createCoffeeStore[0].voting : 0;
 
-    //   const voting = _createCoffeeStore ? _createCoffeeStore[0].voting : 0;
+    return coffeeStoreFromMapbox
+        ? {
+            ...coffeeStoreFromMapbox,
+            voting,
+        }
+        : {};
 
-    //   return coffeeStoreFromMapbox
-    //     ? {
-    //         ...coffeeStoreFromMapbox,
-    //         voting,
-    //       }
-    //     : {};
-
-    return coffeeStoreFromMapbox;
+    // return coffeeStoreFromMapbox;
 }
 
 export async function generateStaticParams() {
@@ -78,7 +77,7 @@ export default async function Page(props: {
                             <p className="pl-2">{address}</p>
                         </div>
                     )}
-                    {/* <Upvote voting={voting} id={id} /> */}
+                    <Upvote voting={voting} id={id} />
                 </div>
             </div>
         </div>
